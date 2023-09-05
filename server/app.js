@@ -92,7 +92,6 @@ const root = {
             const {login, password} = input
             if (!password) return new Error('Enter password')
             const userData = await fetchUserByLogin(login)
-            console.log(userData)
 
             if (!userData) return new Error('Can not login')
             const isMatch = await bcrypt.compare(password, userData?.password)
