@@ -2,6 +2,7 @@
 It is a full stack auth project written with TypeScript React MobX graphQL Nodejs Express sqlite3
 
 to start the project run server and client:
+* install dependencies for client and server `yarn install`
 * to start server use command `npm run server`
 * to start client use command `npm run start` 
 
