@@ -1,7 +1,7 @@
 # userAuth
-It is full stack auth project written with TypeScript React MobX graphQL Nodejs Express sqlite3
+It is a full stack auth project written with TypeScript React MobX graphQL Nodejs Express sqlite3
 
-to start project run server and client:
+to start the project run server and client:
 * to start server use command `npm run server`
 * to start client use command `npm run start` 
 
