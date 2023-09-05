@@ -1,0 +1,12 @@
+.authPage{
+  padding-top: 16px;
+
+}
+.authPageHeader{
+    text-align: center;
+    padding-bottom: 16px;
+}
+
+.authPageHelpText{
+    color: #ef5350
+}

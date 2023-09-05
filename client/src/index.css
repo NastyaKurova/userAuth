@@ -1,0 +1,4 @@
+@import "~materialize-css/dist/css/materialize.min.css";
+.textCenter{
+    text-align: center;
+}
