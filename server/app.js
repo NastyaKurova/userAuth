@@ -81,7 +81,12 @@ const root = {
             db.run(sql, [login, password, update_timestamp, create_timestamp], (err) => {
                 if (err) return new Error(err)
             })
-            return { login, update_timestamp, create_timestamp }
+            const updatedUserData = await fetchUserByLogin(login)
+            return {
+                login: updatedUserData.login,
+                update_timestamp: updatedUserData.update_timestamp,
+                create_timestamp: updatedUserData.create_timestamp
+            }
 
         } catch(e) {
             return new Error('User has not been created')
