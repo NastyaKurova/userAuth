@@ -83,6 +83,7 @@ const root = {
             })
             const updatedUserData = await fetchUserByLogin(login)
             return {
+                id: updatedUserData.id,
                 login: updatedUserData.login,
                 update_timestamp: updatedUserData.update_timestamp,
                 create_timestamp: updatedUserData.create_timestamp
@@ -111,6 +112,7 @@ const root = {
             const token  = jwt.sign({userId: updatedUserData.id},'secret',{expiresIn: '1h'})
             return {
                 token,
+                id: updatedUserData.id,
                 login: updatedUserData.login,
                 update_timestamp: updatedUserData.update_timestamp,
                 create_timestamp: updatedUserData.create_timestamp
@@ -130,7 +132,7 @@ app.use('/graphql', graphqlHTTP({
 
 async function start(){
     try {
-        const sql = `CREATE TABLE IF NOT EXISTS users(ID INTEGER PRIMARY KEY, login, password, update_timestamp, create_timestamp)`
+        const sql = `CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, login, password, update_timestamp, create_timestamp)`
         db.run(sql)
         app.listen(PORT, () => console.log(`App has been started on port ${PORT}`))
     }

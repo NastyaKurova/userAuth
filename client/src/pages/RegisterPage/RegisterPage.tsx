@@ -1,16 +1,18 @@
 import React, {ChangeEvent, FC, FormEvent, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {User} from "../../types/User";
-import authStore from "../../store/AuthStore";
 import classes from "../../styles/authPage.module.css";
 import {Errors} from "../../types/Errors";
 import {userApiService} from "../../api/userApiService";
+import {useMessage} from "../../hooks/useMessage";
+import {Messages} from "../../types/Messages";
 
 const RegisterPage:FC = () => {
     const [login, setLogin] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [error, setError] = useState<string>('')
     const navigate = useNavigate();
+    const message = useMessage()
     const handleLogin=(e: ChangeEvent<HTMLInputElement>)=>{
         setLogin(e.target.value)
         if(error) setError('')
@@ -24,9 +26,11 @@ const RegisterPage:FC = () => {
         e.preventDefault();
         if (!login || !password) return setError(Errors.FillFields)
         try {
-            const user: User = await userApiService.registerUser(login, password)
-            authStore.registerUser(user);
-            if (user?.login) return navigate('/user')
+            const user: User = await userApiService.registerUser({login, password})
+            if (user?.login) {
+                message({text: Messages.userCreated, classes: classes.authPageToast})
+                return navigate('/login')
+            }
 
         } catch (error) {
             setError(JSON.parse(JSON.stringify(error))?.response?.errors[0]?.message)

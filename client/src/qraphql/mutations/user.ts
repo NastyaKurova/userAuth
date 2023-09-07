@@ -1,6 +1,7 @@
 export const LOGIN_MUTATION =`
        mutation loginUser($input: UserInput){
     loginUser(input: $input){
+    id,
     login,
     update_timestamp,
     create_timestamp,

@@ -1,10 +1,9 @@
 import React, {ChangeEvent, FC, FormEvent, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import authStore from "../../store/AuthStore";
 import {User} from "../../types/User";
 import classes from "../../styles/authPage.module.css";
-import {userApiService} from "../../api/userApiService";
 import {Errors} from "../../types/Errors";
+import {useAuth} from "../../hooks/useAuth";
 
 
 
@@ -12,7 +11,9 @@ const LoginPage:FC = () => {
     const [login, setLogin] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [error, setError] = useState<string>('')
+    const { login: loginUserAction } = useAuth()
     const navigate = useNavigate();
+
     const handleLogin=(e: ChangeEvent<HTMLInputElement>)=>{
         setLogin(e.target.value)
        if(error) setError('')
@@ -25,14 +26,14 @@ const LoginPage:FC = () => {
         e.preventDefault();
         if (!login || !password) return setError(Errors.FillFields)
         try {
-            const user: User = await userApiService.loginUser(login, password)
-            authStore.loginUser(user);
-            if (user?.login) return navigate('/user')
+            const user: User = await loginUserAction({login, password})
+            if (user?.id) return navigate('/user')
 
         } catch (error) {
             setError(JSON.parse(JSON.stringify(error))?.response?.errors[0]?.message)
         }
     }
+
     return (
         <div className="container">
             <div  className={`row ${classes.authPage}`}>
