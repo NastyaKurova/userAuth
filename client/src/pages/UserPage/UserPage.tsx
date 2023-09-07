@@ -22,7 +22,7 @@ const UserPage:FC = observer(() => {
         if(isAuthenticated && !login){
             getCurrentUser(id)
         }
-    },[getCurrentUser])
+    },[id, isAuthenticated, login, getCurrentUser])
 
     return (
         <div className="container">
